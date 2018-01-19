@@ -91,10 +91,9 @@ class Client(object):
         )
 
     def __repr__(self):
-        """ show the AOSpy client information """
-
-        return ("Client-remote: %s" % repr(self.remote) if self.remote
-                else "Client-url: %s" % self.origin_url)
+        return json.dumps({
+            'client-url': self.origin_url
+        })
 
 
 class SchemaObjectFactory(object):
@@ -256,6 +255,10 @@ class RequestFactory(object):
             The request instance you can then use to exeute the command.
         """
         op = self.client.swagger_spec.get_op_for_request(method, path)
+        if not op:
+            raise RuntimeError(
+                'no command found for (%s, %s)' % (method, path))
+
         return Request(self.client, CallableOperation(op))
 
     def path_requests(self, path):
@@ -280,9 +283,11 @@ class RequestFactory(object):
         Resource
             instance that has attributes for methods available.
         """
-        path_spec = self.client.origin_spec['paths'][path]
-        get_for_meth = self.client.swagger_spec.get_op_for_request
+        path_spec = self.client.origin_spec['paths'].get(path)
+        if not path_spec:
+            raise RuntimeError("no path found for: %s" % path)
 
+        get_for_meth = self.client.swagger_spec.get_op_for_request
         rsrc = BravadoResource(name=path, ops={
             method: get_for_meth(method, path)
             for method in path_spec.keys()})
