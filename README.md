@@ -31,9 +31,11 @@ vlan_data = resp['results'][0]
 
 print "VLAN-ID is: %s " % vlan_data['vid']
 ```
+outputs:
 ```text
 VLAN-ID is: 12 
 ```
+Create a request to change the VID
 
 ```python
 edit_vlan = client.request.ipam.ipam_vlans_partial_update
@@ -41,10 +43,7 @@ edit_vlan.data.vid = 1001
 
 # check for valid data, if not valid, this will raise an Exception
 edit_vlan.data.validate()
-```
 
-
-```python
 # now execute the edit on the VLAN, 
 resp, ok = edit_vlan(id=vlan_data['id'])
 
