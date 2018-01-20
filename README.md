@@ -85,9 +85,17 @@ outputs:
 
 # Installation
 
+Not yet, but soon:
 ````bash
 pip install halutz
 ````
+
+For now:
+```bash
+git clone https://github.com/jeremyschulman/halutz.git
+cd halutz
+python setup.py install
+```
 
 # Documentation
 
