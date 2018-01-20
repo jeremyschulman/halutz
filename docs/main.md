@@ -4,7 +4,7 @@
   
   * [Clients](Clients.ipynb)
 
-  * Requests
+  * [Requests](Requests-Intro.ipynb)
   
     - [Getting a Request](Requests.ipynb)
 
