@@ -17,7 +17,7 @@ The purpose of a halutz client is to:
    * Create python objects required by request body-parameters
    * Perform data validation using the Swagger spec
 
-<a href="https://https://drive.google.com/open?id=13YxlFJbsj42tRzihDRB1t54KH5BIbMM0"><img src="https://drive.google.com/open?id=13YxlFJbsj42tRzihDRB1t54KH5BIbMM0" title="halutz"/></a>
+<a href="http://gph.is/2G29tRO"><img src="http://gph.is/2G29tRO" title="halutz"/></a>
      
 # Quick Start
 
