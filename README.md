@@ -6,63 +6,9 @@ Halutz is a python library for working with an [Swagger](https://swagger.io/) ba
 It is built around [bravado](https://github.com/Yelp/bravado) and
  [python-jsonschema-objects](https://github.com/cwacek/python-jsonschema-objects)
 
+[Quickstart]("Quckstart.ipynb)
 
-# Quickstart
 
-````python
-from halutz.client import Client
-from requests.sessions import Session
-
-my_session = Session()
-my_session.headers['Authorization'] = "Token My-Token-Value"
-my_api_url = 'http://localhost:32768'
-my_api_doc_url = my_api_url + "/api/docs?format=openapi"
-
-client = Client(origin_url=my_api_url, 
-                spec_dict=my_session.get(my_api_doc_url).json(),
-                requests_session=my_session)
-    
-
-# Given an API Swagger spec that has an API with a tag='design'
-# and an operationID='get_rack_types', get a Request instance.
-
-rqst = client.request.design.get_rack_types
-
-# This request has no parameters, but if it did you would
-# pass them as key-value pairs when you execute the request.  When
-# you execute the request, will get back a tuple that is  
-# the response data, and ok=True/False if the command
-# was successful.
-
-respose, ok = rqst()
-
-if not ok:
-    raise RuntimeError(
-    'cannot run command, debug this response: ', response)
-
-# Or you might want to get a specific command if you know the API
-# path
-
-rqst = client.command_request('get', '/api/design/rack-types')
-
-# Or you might want to get the collection of all commands
-# for a givent path.  For example, let's say the
-# given path supports both a 'get' and a 'post' command:
-
-rack_api = client.path_requests('/api/design/rack-types')
-
-get_racks = rack_api.get
-create_rack = rack_api.post
-
-# Of course, you could simply execute the command without keeping
-# the request instance, like this:
-
-got_racks, ok = rack_api.get()
-
-# Finally, there is a simple integration with the python-jsonschema-objects
-# metabuild sysetm so that you can create request body payloads and validate
-# the data before sending the command.  That tutorial will be provided soon.
-````
 
 # Why Another Swagger Client library?
 
