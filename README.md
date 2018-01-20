@@ -6,7 +6,9 @@ Halutz is a python library for working with an [Swagger](https://swagger.io/) ba
 It is built around [bravado](https://github.com/Yelp/bravado) and
  [python-jsonschema-objects](https://github.com/cwacek/python-jsonschema-objects)
 
-[Quickstart](Quickstart.ipynb)
+<iframe src="Quickstart.html" title="iframe example 1" width="400" height="300">
+  <p>Your browser does not support iframes.</p>
+</iframe>
 
 
 
