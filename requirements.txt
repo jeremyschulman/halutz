@@ -1,0 +1,6 @@
+bravado
+first
+inflection
+msgpack
+python_jsonschema_objects
+six

@@ -1,41 +1,34 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import re
 
-from setuptools import setup, find_packages
+from setuptools import setup
+from pip.req.req_file import parse_requirements
+from pip.download import PipSession
+
 import halutz
 
 
-def read(fname):
-    with open(fname) as fp:
-        content = fp.read()
-    return content
-
 setup(
     name='halutz',
+    packages=['halutz'],
     version=halutz.__version__,
-    description=('Python client for Swagger/OpenAPI'),
-    # long_description=read('README.rst'),
+    description='Python client for Swagger/OpenAPI',
+    # TODO long_description=read('README.rst'),
     author='Jeremy Schulman',
     author_email='nwkautomaniac@gmail.com',
     url='https://github.com/jeremyschulman/halutz',
-    packages=['halutz'],
     include_package_data=True,
     license='MIT',
     zip_safe=False,
     install_requires=[
-        'requests',
-        'six',
-        'first',
-        'inflection',
-        'bravado',
-        'python_jsonschema_objects'
-    ],
-    # keywords=('serialization', 'rest', 'json', 'api', 'marshal',
-    #           'marshalling', 'deserialization', 'validation', 'schema',
-    #           'marshmallow'),
+        item.name
+        for item in parse_requirements(
+            'requirements.txt',
+            session=PipSession())],
+    keywords=('serialization', 'rest', 'json', 'api', 'marshal',
+              'marshalling', 'deserialization', 'validation', 'schema',
+              'jsonschema', 'swagger', 'openapi', 'networking', 'automation'),
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2',
