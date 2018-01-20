@@ -26,6 +26,7 @@ setup(
     install_requires=[
         'requests',
         'six',
+        'first',
         'inflection',
         'bravado',
         'python_jsonschema_objects'
