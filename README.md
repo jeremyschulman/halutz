@@ -13,7 +13,7 @@ work with OpenAPI based system.  To do this, I combined the [bravado](https://gi
 a very friendly and feature rich way to interact with these systems.  I will be creating a number of
 tutorials using Jupyter notebooks to showcase these feature.  For now, here is a Quickstart  
 
-[![That](http://img.youtube.com/vi/Rkle2FIr1-k/0.jpg)](http://www.youtube.com/watch?v=Rkle2FIr1-k "This")
+[![asciicast](https://asciinema.org/a/14.png)](https://asciinema.org/a/14)
 
 # Quickstart
 
