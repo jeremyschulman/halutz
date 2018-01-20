@@ -5,6 +5,55 @@ Halutz is a python library for working with an [Swagger](https://swagger.io/) ba
 It is built around [bravado](https://github.com/Yelp/bravado) and
  [python-jsonschema-objects](https://github.com/cwacek/python-jsonschema-objects)
 
+````python
+>>> from halutz.client import Client
+from requests.sessions import Session
+
+my_session = Session()
+my_session.headers['Authorization'] = "Token 0123456789abcdef0123456789abcdef01234567"
+my_api_url = 'http://localhost:32768'
+my_api_doc_url = my_api_url + "/api/docs?format=openapi"
+
+client = Client(origin_url=my_api_url, 
+                spec_dict=my_session.get(my_api_doc_url).json(),
+                requests_session=my_session)
+
+>>> resp, ok = client.request.ipam.ipam_vlans_list(name="Blue")
+
+>>> vlan_data = resp['results'][0]
+
+>>> print "VLAN-ID is: %s " % vlan_data['vid']
+
+>>> rqst = client.request.ipam.ipam_vlans_partial_update
+rqst.data.vid = 1001
+
+>>> rqst.data.validate()
+True
+
+>>> resp, ok = rqst(id=vlan_data['id'])
+
+>>> ok
+True
+
+>>> resp, ok = client.request.ipam.ipam_vlans_read(id=vlan_data['id'])
+
+>>> ok
+True
+
+>>> resp
+{u'custom_fields': {},
+ u'description': u'',
+ u'display_name': u'1001 (Blue)',
+ u'group': None,
+ u'id': 1,
+ u'name': u'Blue',
+ u'role': None,
+ u'site': None,
+ u'status': {u'label': u'Active', u'value': 1},
+ u'tenant': None,
+ u'vid': 1001}
+
+````
 
 # Why Another Swagger Client library?
 
