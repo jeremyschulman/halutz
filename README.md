@@ -5,9 +5,16 @@ Halutz is a python library for working with an [Swagger](https://swagger.io/) ba
 It is built around [bravado](https://github.com/Yelp/bravado) and
  [python-jsonschema-objects](https://github.com/cwacek/python-jsonschema-objects)
 
-````python
+# Quick Start
+
+Create a client for system that uses a Token in the request header. We create a requests Session instance
+and pass this to halutlz when creating the client.
+
+
+```python
 from halutz.client import Client
 from requests.sessions import Session
+import json
 
 my_session = Session()
 my_session.headers['Authorization'] = "Token 0123456789abcdef0123456789abcdef01234567"
@@ -23,38 +30,42 @@ resp, ok = client.request.ipam.ipam_vlans_list(name="Blue")
 vlan_data = resp['results'][0]
 
 print "VLAN-ID is: %s " % vlan_data['vid']
+```
+```text
+VLAN-ID is: 12 
+```
 
-#[stdout] VLAN-ID is: 1001
+```python
+edit_vlan = client.request.ipam.ipam_vlans_partial_update
+edit_vlan.data.vid = 1001
 
-rqst = client.request.ipam.ipam_vlans_partial_update
-rqst.data.vid = 1001
+# check for valid data, if not valid, this will raise an Exception
+edit_vlan.data.validate()
+```
 
-rqst.data.validate()
-# True
 
-resp, ok = rqst(id=vlan_data['id'])
+```python
+# now execute the edit on the VLAN, 
+resp, ok = edit_vlan(id=vlan_data['id'])
 
-ok
-# True
-
-resp, ok = client.request.ipam.ipam_vlans_read(id=vlan_data['id'])
-
-ok
-# True
-
-resp
-# {u'custom_fields': {},
-#  u'description': u'',
-#  u'display_name': u'1001 (Blue)',
-#  u'group': None,
-#  u'id': 1,
-#  u'name': u'Blue',
-#  u'role': None,
-#  u'site': None,
-#  u'status': {u'label': u'Active', u'value': 1},
-#  u'tenant': None,
-#  u'vid': 1001}
+print json.dumps(resp, indent=2)
+```
+````text
+    {
+      "status": 1, 
+      "group": null, 
+      "name": "Blue", 
+      "vid": 1001, 
+      "site": null, 
+      "role": null, 
+      "custom_fields": {}, 
+      "id": 1, 
+      "tenant": null, 
+      "description": ""
+    }
 ````
+
+
 
 # Why Another Swagger Client library?
 
