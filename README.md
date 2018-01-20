@@ -13,7 +13,7 @@ work with OpenAPI based system.  To do this, I combined the [bravado](https://gi
 a very friendly and feature rich way to interact with these systems.  I will be creating a number of
 tutorials using Jupyter notebooks to showcase these feature.  For now, here is a Quickstart  
 
-[![asciicast](https://asciinema.org/a/14.png)](https://asciinema.org/a/14)
+<iframe src='//gifs.com/embed/intent-based-networking-system-apstra-operating-system-86W9B5' frameborder='0' scrolling='no' width='640px' height='360px' style='-webkit-backface-visibility: hidden;-webkit-transform: scale(1);' ></iframe>
 
 # Quickstart
 
