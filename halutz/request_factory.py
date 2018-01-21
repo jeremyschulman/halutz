@@ -46,7 +46,6 @@ class RequestFactory(object):
         You can then use this request to execute the command, and get
         the response value:
 
-            >>> client = Client()
             >>> rqst = client.command_request('get', '/api/hcl')
             >>> resp, ok = rqst()
 
@@ -76,7 +75,6 @@ class RequestFactory(object):
         Returns a Resource instace that will have attributes, one for each of the http-methods
         supported on that path.  For example:
 
-            >>> client = Client()
             >>> hcl_api = client.path_requests('/api/hcl/{id}')
             >>> dir(hcl_api)
             [u'delete', u'get', u'put']

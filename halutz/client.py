@@ -13,10 +13,10 @@ __all__ = ['Client']
 
 class Client(object):
 
-    def __init__(self, origin_url, spec_dict,
+    def __init__(self, base_url, spec_dict,
                  requests_session=None, remote=None):
 
-        self.origin_url = origin_url
+        self.origin_url = base_url
         self.origin_spec = deepcopy(spec_dict)
         self.requests_session = requests_session
         self.remote = remote
