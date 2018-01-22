@@ -101,7 +101,7 @@ python setup.py install
 
 # Documentation
 
-Tutorials in the form of jupyter notebooks are located in the [docs](docs/main.md) directory.
+Tutorials in the form of jupyter notebooks are located in the [docs](docs/README.md) directory.
 
 # Questions?
 
