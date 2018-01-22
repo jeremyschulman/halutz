@@ -31,18 +31,6 @@ class Request(object):
             body_inst = client.build.body_class(command.params[self.body_param])()
             setattr(self, self.body_param, body_inst)
 
-    @staticmethod
-    def proptype(prop_obj, prop_name):
-
-        prop_info = prop_obj.propinfo(prop_name)
-        if prop_info['type'] == 'array':
-            prop = getattr(prop_obj, prop_name)
-            if not prop:
-                setattr(prop_obj, prop_name, [])
-            return getattr(prop_obj, prop_name).__itemtype__
-
-        return prop_info['type']
-
     @property
     def path(self):
         return self.operation.path_name

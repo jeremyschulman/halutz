@@ -20,6 +20,26 @@ class SchemaObjectFactory(object):
                          ['x-model', 'title', 'id']))
 
     @staticmethod
+    def proptype(prop_obj, prop_name):
+        prop_info = prop_obj.propinfo(prop_name)
+
+        if prop_info['type'] == 'array':
+            # if the prop does not exist, then we need to lazy create it
+            # so we can get the item type from the __itemtype__ attribute
+
+            prop = getattr(prop_obj, prop_name)
+            if not prop:
+                setattr(prop_obj, prop_name, [])
+            return getattr(prop_obj, prop_name).__itemtype__
+
+        prop_type = prop_info['type']
+        return {
+            'integer': int,
+            'string': str,
+            'object': dict
+        }.get(prop_type, prop_type)
+
+    @staticmethod
     def schema_class(object_schema, model_name, classes=False):
         """
         Create a object-class based on the object_schema.  Use
@@ -65,7 +85,7 @@ class SchemaObjectFactory(object):
 
         # if `classes` is False(0) return the new model class,
         # else return all the classes resolved
-
+        model_cls.proptype = SchemaObjectFactory.proptype
         return [model_cls, cls_bldr.resolved][classes]
 
     def __model_class(self, model_name):
