@@ -20,6 +20,10 @@ class RequestFactory(object):
         def __dir__(self):
             return self._resource.__dir__()
 
+        def __repr__(self):
+            return str(dir(self))
+
+
     class ViaAttr(object):
         def __init__(self, factory):
             self._factory = factory
