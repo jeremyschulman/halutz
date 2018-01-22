@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "if_name": {
+            "type": "string"
+          },
+          "port_speed": {
+            "required": [
+              "value",
+              "unit"
+            ],
+            "type": "object",
+            "properties": {
+              "unit": {
+                "enum": [
+                  "",
+                  "M",
+                  "G"
+                ],
+                "type": "string",
+                "description": "Indicates if 'value' is in units of Gbps or Mbps"
+              },
+              "value": {
+                "enum": [
+                  0,
+                  1,
+                  100,
+                  40,
+                  10,
+                  50,
+                  25
+                ],
+                "type": "integer",
+                "description": "scalar multiplier for the speed of the port",
+                "format": "int32"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-model": "ListExampleType"
+}

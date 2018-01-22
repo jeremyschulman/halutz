@@ -6,6 +6,8 @@ import msgpack
 from bravado_core.content_type import APP_JSON, APP_MSGPACK
 import bravado.exception
 
+__all__ = ['Request']
+
 
 class Request(object):
 

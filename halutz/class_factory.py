@@ -6,6 +6,8 @@ from jsonschema.compat import lru_cache
 from python_jsonschema_objects import ObjectBuilder
 from python_jsonschema_objects.classbuilder import ClassBuilder
 
+__all__ = ['SchemaObjectFactory']
+
 
 class SchemaObjectFactory(object):
 
