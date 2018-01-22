@@ -16,4 +16,4 @@ jupyter installed.  I hope you enjoy this style of documentations!
   
     - [Working with body parameters](Request-Body.ipynb)
 
-    - [Handling responses](Request-Response.ipynb)
+    - [Handling responses](Request-Responses.ipynb)
