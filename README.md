@@ -1,6 +1,6 @@
 # Halutz
 
-Halutz is a python library for working with [Swagger](https://swagger.io/) APIs, a popular way to define 
+Halutz is a python library for working with systems using [Swagger](https://swagger.io/), a popular way to define 
 and interact with RESTful APIs. The purpose of a halutz client is to:
 
    * Account for systems that require any form of API authentication
@@ -10,9 +10,8 @@ and interact with RESTful APIs. The purpose of a halutz client is to:
    * Perform data validation using the Swagger spec
 
 Halutz was inspired by working with network engineers that are getting started with Python.  
-Network engineers are masters of
-complex CLIs.  Network engineers can use `haltuz` based clients with  [IPython](https://ipython.org/) and
-Juptyer notebooks to *interactively* automate systems *CLI-like* manner. 
+Network engineers are masters of complex CLIs.  Network engineers can use haltuz based clients 
+with [IPython](https://ipython.org/) and Juptyer notebooks to *interactively* automate systems *CLI-like* manner. 
 
 *click on video to see larger format*
 
