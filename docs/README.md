@@ -10,8 +10,10 @@ jupyter installed.  I hope you enjoy this style of documentations!
 
   * [Requests](Requests.ipynb)
   
-    - [Introspection](Request-Introspection.ipynb)
+    - [Using the client.request factory](Client-request-attribute.ipynb)
+    
+    - [Introspecting request information](Request-Introspection.ipynb)
   
-    - [Body Parameters](Request-Body.ipynb)
+    - [Working with body parameters](Request-Body.ipynb)
 
-    - [Request Responses](Request-Response.ipynb)
+    - [Handling responses](Request-Response.ipynb)
