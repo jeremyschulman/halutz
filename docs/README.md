@@ -8,12 +8,10 @@ jupyter installed.  I hope you enjoy this style of documentations!
   
   * [Clients](Clients.ipynb)
 
-  * [Requests](Requests-Intro.ipynb)
+  * [Requests](Requests.ipynb)
   
-    - [Getting a Request](Requests.ipynb)
-
     - [Introspection](Request-Introspection.ipynb)
   
     - [Body Parameters](Request-Body.ipynb)
 
-  - [Executing Requests](Executing-Requests.ipynb)
+    - [Request Responses](Request-Response.ipynb)
