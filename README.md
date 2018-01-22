@@ -1,21 +1,18 @@
 # Halutz
 
-Halutz is a python library for working with [Swagger](https://swagger.io/) API based systems.
-OpenAPI is becoming a popular way to define and interact with RESTful systems. I work with
-network engineers that are getting started with Python.  Network engineers are masters of
-complex CLIs.  I've started using [ipython](https://ipython.org/) and Juptyer notebooks
-as a way to *interactively* use Python to automate systems.  The `halutz` library allows
-network engineers to have clients that can be used  *CLI-like* manner. 
-
-Halutz is built using [bravado](https://github.com/Yelp/bravado) and 
-[python-jsonschema-objects](https://github.com/cwacek/python-jsonschema-objects) libraries.
-The purpose of a halutz client is to:
+Halutz is a python library for working with [Swagger](https://swagger.io/) APIs, a popular way to define 
+and interact with RESTful APIs. The purpose of a halutz client is to:
 
    * Account for systems that require any form of API authentication
    * Provide *user-friedly* access to all API request commands
    * Provide for the interactive instrospection of API capabilities
    * Create python objects required by request body-parameters
    * Perform data validation using the Swagger spec
+
+Halutz was inspired by working with network engineers that are getting started with Python.  
+Network engineers are masters of
+complex CLIs.  Network engineers can use `haltuz` based clients with  [IPython](https://ipython.org/) and
+Juptyer notebooks to *interactively* automate systems *CLI-like* manner. 
 
 *click on video to see larger format*
 
