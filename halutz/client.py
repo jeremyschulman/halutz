@@ -13,12 +13,12 @@ __all__ = ['Client']
 
 class Client(object):
 
-    def __init__(self, base_url, spec_dict,
-                 requests_session=None, remote=None):
+    def __init__(self, base_url, origin_spec,
+                 session=None, remote=None):
 
         self.base_url = base_url
-        self.origin_spec = deepcopy(spec_dict)
-        self.requests_session = requests_session
+        self.origin_spec = deepcopy(origin_spec)
+        self.session = session
         self.remote = remote
 
         # bravado swagger spec created from the origin_spec, linking
@@ -58,8 +58,8 @@ class Client(object):
         # if the caller provided an existing requests session,
         # then use there here.
 
-        if self.requests_session:
-            http_client.session = self.requests_session
+        if self.session:
+            http_client.session = self.session
 
         return Spec.from_dict(
             spec_dict=self.origin_spec,
