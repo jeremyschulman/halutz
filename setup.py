@@ -11,7 +11,8 @@ setup(
     name='halutz',
     packages=['halutz'],
     version=halutz.__version__,
-    description='Python client for Swagger/OpenAPI',
+    description=("Halutz is a python library for Swagger, "
+                 "inspired by working with network engineers getting started with Python."),
     # TODO long_description=read('README.rst'),
     author='Jeremy Schulman',
     author_email='nwkautomaniac@gmail.com',
