@@ -15,7 +15,7 @@ with [IPython](https://ipython.org/) and Juptyer notebooks to *interactively* au
 
 *click on video to see larger format*
 
-<a href="https://vimeo.com/251980848"><img src="https://media.giphy.com/media/l0HUc4HVq9K8XVGqA/giphy.gif" title="halutz"/></a>
+<a href="https://vimeo.com/251980848"><img src="docs/media/halutz-splashpage.gif" title="halutz"/></a>
      
 # Quick Start
 
