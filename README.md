@@ -17,6 +17,16 @@ with [IPython](https://ipython.org/) and Juptyer notebooks to *interactively* au
 
 <a href="https://vimeo.com/251980848"><img src="docs/media/halutz-splashpage.gif" title="halutz"/></a>
      
+# Installation
+
+````bash
+pip install halutz
+````
+
+# Documentation
+
+Tutorials in the form of jupyter notebooks are located in the [docs](docs/README.md) directory.
+
 # Quick Start
 
 Create a client for system that uses a Token in the request header.
@@ -81,23 +91,6 @@ outputs:
 }
 ```
 
-# Installation
-
-Not yet, but soon:
-````bash
-pip install halutz
-````
-
-For now:
-```bash
-git clone https://github.com/jeremyschulman/halutz.git
-cd halutz
-python setup.py install
-```
-
-# Documentation
-
-Tutorials in the form of jupyter notebooks are located in the [docs](docs/README.md) directory.
 
 # Questions?
 

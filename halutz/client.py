@@ -13,13 +13,22 @@ __all__ = ['Client']
 
 class Client(object):
 
-    def __init__(self, base_url, origin_spec,
-                 session=None, remote=None):
+    def __init__(self, base_url,
+                 origin_spec=None,
+                 session=None,
+                 remote=None):
 
         self.base_url = base_url
-        self.origin_spec = deepcopy(origin_spec)
         self.session = session
         self.remote = remote
+
+        # if an origin_spec is not providing on init, presume that the
+        # client has be subclassed to implement the method 'fetch_swagger_spec'
+
+        if not origin_spec:
+            origin_spec = self.fetch_swagger_spec()
+
+        self.origin_spec = deepcopy(origin_spec)
 
         # bravado swagger spec created from the origin_spec, linking
         # the bravado requests session to the AOSpy session
@@ -51,6 +60,9 @@ class Client(object):
 
         # object to use for building jsonschema classes/instances
         self.build = SchemaObjectFactory(self)
+
+    def fetch_swagger_spec(self):
+        raise RuntimeError('fetch_swagger_spec not implemeted')
 
     def make_swagger_spec(self):
         http_client = RequestsClient()
