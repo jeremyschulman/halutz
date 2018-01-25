@@ -69,7 +69,10 @@ class Request(object):
 
         # auto-add body if exists and not provided by caller.
         if self.body_param and self.body_param not in params:
-            params[self.body_param] = getattr(self, self.body_param).for_json()
+            body_attr = getattr(self, self.body_param)
+            params[self.body_param] = (
+                body_attr.for_json() if hasattr(body_attr, 'for_json')
+                else body_attr)
 
         try:
 
