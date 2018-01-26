@@ -13,12 +13,12 @@ __all__ = ['Client']
 
 class Client(object):
 
-    def __init__(self, base_url,
+    def __init__(self, server_url,
                  origin_spec=None,
                  session=None,
                  remote=None):
 
-        self.base_url = base_url
+        self.server_url = server_url
         self.session = session
         self.remote = remote
 
@@ -75,7 +75,7 @@ class Client(object):
 
         return Spec.from_dict(
             spec_dict=self.origin_spec,
-            origin_url=self.base_url,
+            origin_url=self.server_url,
             http_client=http_client,
 
             # TODO expose these configuration options to the
@@ -91,5 +91,5 @@ class Client(object):
 
     def __repr__(self):
         return json.dumps({
-            'client-url': self.base_url
+            'client-url': self.server_url
         })
