@@ -27,7 +27,7 @@ pip install halutz
 
 Tutorials in the form of jupyter notebooks are located in the [docs](docs/README.md) directory.
 
-# Quick Start
+# Quickstart
 
 Create a client for system that uses a Token in the request header.
 We create a `requests.Session` instance, setup the header, and pass this to halutz 
@@ -46,9 +46,9 @@ my_session.headers['Authorization'] = "Token 0123456789abcdef0123456789abcdef012
 my_api_url = 'http://localhost:32768'
 my_api_doc_url = my_api_url + "/api/docs?format=openapi"
 
-client = Client(origin_url=my_api_url, 
-                spec_dict=my_session.get(my_api_doc_url).json(),
-                requests_session=my_session)
+client = Client(server_url=my_api_url, 
+                origin_spec=my_session.get(my_api_doc_url).json(),
+                session=my_session)
 
 # retrieve the VLAN with name "Blue".  When executing a request
 # we get back a tuple of (response, ok_fail).  We need to get
