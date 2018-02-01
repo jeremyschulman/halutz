@@ -12,21 +12,30 @@ __all__ = ['Client']
 
 
 class Client(object):
+    file_spec = "{server}-swagger.json"
 
-    def __init__(self, server_url,
+    def __init__(self,
+                 server_url,
                  origin_spec=None,
                  session=None,
-                 remote=None):
+                 remote=None,
+                 spec_filepath=None):
 
         self.server_url = server_url
         self.session = session
         self.remote = remote
 
-        # if an origin_spec is not providing on init, presume that the
-        # client has be subclassed to implement the method 'fetch_swagger_spec'
+        # if an origin_spec is not providing on init, then the caller could
+        # provide either a file-path location to a locally stored copy,
+        # and if not that, then the spec will be downloaded from the server.
+        # in the latter case, the subclass must implement the
+        # `fetch_swagger_spec` method.
 
         if not origin_spec:
-            origin_spec = self.fetch_swagger_spec()
+            if spec_filepath:
+                origin_spec = self.load_swagger_spec(spec_filepath)
+            else:
+                origin_spec = self.fetch_swagger_spec()
 
         self.origin_spec = deepcopy(origin_spec)
 
@@ -61,8 +70,31 @@ class Client(object):
         # object to use for building jsonschema classes/instances
         self.build = SchemaObjectFactory(self)
 
+    @property
+    def server(self):
+        return self.server_url.partition('://')[-1]
+
     def fetch_swagger_spec(self):
+        """ must be subclassed to load the spec from the server """
         raise RuntimeError('fetch_swagger_spec not implemeted')
+
+    def save_swagger_spec(self, filepath=None):
+        """
+        Saves a copy of the origin_spec to a local file in JSON format
+        """
+        to_file = filepath or self.file_spec.format(server=self.server)
+
+        with open(to_file, 'w+') as f_obj:
+            json.dump(self.origin_spec, f_obj, indent=3)
+
+    def load_swagger_spec(self, filepath=None):
+        """
+        Loads the origin_spec from a local JSON file.  If `filepath`
+        is not provided, then the class `file_spec` format will be used
+        to create the file-path value.
+        """
+        from_file = filepath or self.file_spec.format(server=self.server)
+        return json.load(open(from_file))
 
     def make_swagger_spec(self):
         http_client = RequestsClient()

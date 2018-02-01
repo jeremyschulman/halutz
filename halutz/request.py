@@ -61,6 +61,8 @@ class Request(object):
                 content_value = msgpack.loads(response.raw_bytes, encoding='utf-8')
 
             return content_value
+        elif content_type.startswith('text'):
+            return response.text
 
         return None
 
