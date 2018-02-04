@@ -1,6 +1,7 @@
 
 from copy import deepcopy
 import json
+from os import path
 
 from bravado_core.spec import Spec
 from bravado.requests_client import RequestsClient
@@ -19,7 +20,7 @@ class Client(object):
                  origin_spec=None,
                  session=None,
                  remote=None,
-                 spec_filepath=None):
+                 spec_file=None):
 
         self.server_url = server_url
         self.session = session
@@ -31,13 +32,20 @@ class Client(object):
         # in the latter case, the subclass must implement the
         # `fetch_swagger_spec` method.
 
-        if not origin_spec:
-            if spec_filepath:
-                origin_spec = self.load_swagger_spec(spec_filepath)
-            else:
-                origin_spec = self.fetch_swagger_spec()
+        if spec_file is True:
+            spec_file = self.file_spec.format(server=self.server)
+
+        spec_file_exists = path.isfile(spec_file)
+
+        if spec_file and spec_file_exists:
+            origin_spec = self.load_swagger_spec(spec_file)
+        elif not origin_spec:
+            origin_spec = self.fetch_swagger_spec()
 
         self.origin_spec = deepcopy(origin_spec)
+
+        if spec_file and not spec_file_exists:
+            self.save_swagger_spec(spec_file)
 
         # bravado swagger spec created from the origin_spec, linking
         # the bravado requests session to the AOSpy session
@@ -82,10 +90,10 @@ class Client(object):
         """
         Saves a copy of the origin_spec to a local file in JSON format
         """
-        to_file = filepath or self.file_spec.format(server=self.server)
+        if filepath is True or filepath is None:
+            filepath = self.file_spec.format(server=self.server)
 
-        with open(to_file, 'w+') as f_obj:
-            json.dump(self.origin_spec, f_obj, indent=3)
+        json.dump(self.origin_spec, open(filepath, 'w+'), indent=3)
 
     def load_swagger_spec(self, filepath=None):
         """
@@ -93,8 +101,10 @@ class Client(object):
         is not provided, then the class `file_spec` format will be used
         to create the file-path value.
         """
-        from_file = filepath or self.file_spec.format(server=self.server)
-        return json.load(open(from_file))
+        if filepath is True or filepath is None:
+            filepath = self.file_spec.format(server=self.server)
+
+        return json.load(open(filepath))
 
     def make_swagger_spec(self):
         http_client = RequestsClient()
