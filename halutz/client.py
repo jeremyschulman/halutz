@@ -35,7 +35,7 @@ class Client(object):
         if spec_file is True:
             spec_file = self.file_spec.format(server=self.server)
 
-        spec_file_exists = path.isfile(spec_file)
+        spec_file_exists = path.isfile(spec_file) if spec_file else False
 
         if spec_file and spec_file_exists:
             origin_spec = self.load_swagger_spec(spec_file)
