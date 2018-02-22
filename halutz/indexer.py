@@ -3,11 +3,17 @@ from bidict import namedbidict
 import six
 import json
 from operator import itemgetter
+from collections import namedtuple
+
+__all__ = ['Indexer']
+
+
 
 class Indexer(object):
 
     FROM_KEY = None
     Index = namedbidict('Index', 'id', 'name')
+    item_class = namedtuple('IndexItem', 'id, name, value')
 
     def __init__(self, rqst, name_from=None, id_from=None, response_code='200'):
         self.rqst = rqst
@@ -102,13 +108,27 @@ class Indexer(object):
         return self
 
     def find(self, item_name):
-        return self[item_name] if item_name in self \
-                   else (None, None)
+        return None if item_name not in self else self[item_name]
+
+    def __iter__(self):
+
+        myself = self
+
+        class indexiterator(object):
+            def __init__(self):
+                self._name_iter = iter(myself.index.id_for)
+
+            def next(self):
+                return myself[six.next(self._name_iter)]
+
+            __next__ = next
+
+        return indexiterator()
 
     def __getitem__(self, item_name):
         item_id = self.index.id_for.get(item_name)
         assert item_id, "item name %s not found in catalog" % item_name
-        return item_id, self.catalog[item_id]
+        return self.item_class(id=item_id, name=item_name, value=self.catalog[item_id])
 
     def __len__(self):
         return len(self.index)
