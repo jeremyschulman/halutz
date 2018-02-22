@@ -99,6 +99,8 @@ class Indexer(object):
         self.clear()
         self._ingest_(resp[self.items_key])
 
+        return self
+
     def __getitem__(self, item_name):
         item_id = self.index.id_for.get(item_name)
         assert item_id, "item name %s not found in catalog" % item_name
@@ -106,6 +108,9 @@ class Indexer(object):
 
     def __len__(self):
         return len(self.index)
+
+    def __contains__(self, item_name):
+        return item_name in self.index.id_for
 
     def __repr__(self):
         return json.dumps({
