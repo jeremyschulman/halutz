@@ -90,7 +90,7 @@ class Indexer(object):
         self.index.clear()
         self.catalog.clear()
 
-    def get(self, **kwargs):
+    def run(self, **kwargs):
         resp, ok = self.rqst(**kwargs)
         if not ok:
             raise RuntimeError(
@@ -100,6 +100,10 @@ class Indexer(object):
         self._ingest_(resp[self.items_key])
 
         return self
+
+    def find(self, item_name):
+        return self[item_name] if item_name in self \
+                   else (None, None)
 
     def __getitem__(self, item_name):
         item_id = self.index.id_for.get(item_name)
