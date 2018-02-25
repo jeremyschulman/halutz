@@ -1,18 +1,19 @@
 import six
-
+import copy
 from pprint import pformat
 from first import first
 from bidict import namedbidict
 from operator import itemgetter
 from collections import namedtuple
 
+
 __all__ = ['Indexer', 'IndexItem']
 
 
 class IndexItem(object):
-    def __init__(self, item_id, item_name, item_value, indexer):
+    def __init__(self, item_id, item_name, item_value, index):
         self.id, self.name, self.value = item_id, item_name, item_value
-        self.indxer = indexer
+        self.index = index
 
     def __repr__(self):
         return pformat({
@@ -119,13 +120,20 @@ class Indexer(object):
         self.catalog.clear()
 
     def run(self, **kwargs):
+        # keep a copy of the last run kwargs so that they could be later referenced
+        # this is usedful for URL construction/ect.
+
+        self.run_kwargs = copy.deepcopy(kwargs)
+
         resp, ok = self.rqst(**kwargs)
         if not ok:
             raise RuntimeError(
                 'unable to get items', resp)
 
+        items = resp[self.items_key]
+
         self.clear()
-        self._ingest_(resp[self.items_key])
+        self._ingest_(items)
 
         return self
 
@@ -153,7 +161,7 @@ class Indexer(object):
         return self.index_item_type(
             item_id=item_id, item_name=item_name,
             item_value=self.catalog[item_id],
-            indexer=self)
+            index=self)
 
     def __len__(self):
         return len(self.index)
