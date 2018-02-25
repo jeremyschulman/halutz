@@ -35,6 +35,9 @@ class Indexer(object):
                  ):
 
         self.rqst = rqst
+        self.name_from = name_from
+        self.id_from = id_from
+
         deref = rqst.client.deref
 
         self.schema = deref(rqst.spec['responses'][response_code or Indexer.RESP_STATUS_CODE]['schema'])
@@ -48,23 +51,22 @@ class Indexer(object):
         items_type = items_schema['type']
         assert items_type in ['object', 'array'], "unknown items type: %s" % items_type
 
-        self.name_from = name_from
-        self.id_from = id_from
-
         if items_type == 'object':
+            self._ingest_ = self.ingest_from_dict
             self.items_properties = (
                 items_schema.get('properties') or
                 items_schema['additionalProperties']['properties'])
-
-            self._ingest_ = self.ingest_from_dict
         else:
-            self.items_properties = items_schema['items']['properties']
             self._ingest_ = self.ingest_from_list
+            self.items_properties = (
+                items_schema['items'].get('properties') or
+                deref(items_schema['items']))
 
         self.items_type = items_type
         self.index = Indexer.Index()
         self.index_item_type = index_item_type or IndexItem
         self.catalog = dict()
+        self.run_kwargs = None
 
     @property
     def names(self):
@@ -80,38 +82,38 @@ class Indexer(object):
         # if id_from is None, then we use the key as the id
         # otherwise we have a property identified to get the id value
 
-        if not self.id_from:
-            def id_from(key, _value):
-                return key
-        else:
-            def id_from(_key, value):
-                return value[self.id_from]
+        if not callable(self.id_from):
+            if not self.id_from:
+                self.id_from = lambda k, v: k
+            else:
+                self.id_from = lambda k, v: v[self.id_from]
 
         # if name_from is None, then we use the key as the name
         # value, otherwise we have a property identified to get
         # the name value
 
-        if not self.name_from:
-            def name_from(key, _value):
-                return key
-        else:
-            def name_from(_key, value):
-                return value[self.name_from]
+        if not callable(self.name_from):
+            if not self.name_from:
+                self.name_from = lambda k, v: k
+            else:
+                self.name_from = lambda k, v: v[self.name_from]
 
         for each_key, each_item in six.iteritems(items):
-            each_id = id_from(each_key, each_item)
-            each_name = name_from(each_key, each_item)
+            each_id = self.id_from(each_key, each_item)
+            each_name = self.name_from(each_key, each_item)
             self.index[each_id] = each_name
             self.catalog[each_id] = each_item
 
     def ingest_from_list(self, items):
+        if not callable(self.id_from):
+            self.id_from = itemgetter(self.id_from or 'id')
 
-        id_from = itemgetter(self.id_from or 'id')
-        name_from = itemgetter(self.name_from or 'name')
+        if not callable(self.name_from):
+            self.name_from = itemgetter(self.name_from or 'name')
 
         for each_item in items:
-            each_id = id_from(each_item)
-            each_name = name_from(each_item)
+            each_id = self.id_from(each_item)
+            each_name = self.name_from(each_item)
             self.index[each_id] = each_name
             self.catalog[each_id] = each_item
 
