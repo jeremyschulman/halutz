@@ -139,6 +139,9 @@ class Indexer(object):
 
         return self
 
+    def rerun(self):
+        return self.run(**self.run_kwargs)
+
     def find(self, item_name):
         return None if item_name not in self else self[item_name]
 
