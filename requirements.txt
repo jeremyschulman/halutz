@@ -5,3 +5,4 @@ jsonschema
 msgpack
 python_jsonschema_objects
 six
+bidict
