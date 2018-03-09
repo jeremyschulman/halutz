@@ -86,7 +86,10 @@ class Indexer(object):
             if not self.id_from:
                 self.id_from = lambda k, v: k
             else:
-                self.id_from = lambda k, v: v[self.id_from]
+                id_from = self.id_from
+                def call_id_from(item_key, item_value):
+                    return item_value[id_from]
+                self.id_from = call_id_from
 
         # if name_from is None, then we use the key as the name
         # value, otherwise we have a property identified to get
@@ -96,7 +99,10 @@ class Indexer(object):
             if not self.name_from:
                 self.name_from = lambda k, v: k
             else:
-                self.name_from = lambda k, v: v[self.name_from]
+                name_from = self.name_from
+                def call_name_from(item_key, item_value):
+                    return item_value[name_from]
+                self.name_from = call_name_from
 
         for each_key, each_item in six.iteritems(items):
             each_id = self.id_from(each_key, each_item)
