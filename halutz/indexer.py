@@ -70,13 +70,11 @@ class Indexer(object):
 
     @property
     def names(self):
-        # TODO: change to list(self.index.id_for) validate is list for Py2 and Py3
-        return self.index.id_for.keys()
+        return list(self.index.id_for)
 
     @property
     def ids(self):
-        # TODO: change to list(self.index.id_for) validate is list for Py2 and Py3
-        return self.index.name_for.keys()
+        return list(self.index.name_for)
 
     def ingest_from_dict(self, items):
         # if id_from is None, then we use the key as the id
