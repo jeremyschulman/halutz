@@ -109,5 +109,5 @@ class Request(object):
         return "Request: %s" % json.dumps({
             'method': self.method,
             'path': self.path,
-            'params': self.params.keys()
+            'params': list(self.params)
         }, indent=3)
