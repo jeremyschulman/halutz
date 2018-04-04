@@ -14,6 +14,7 @@ class SchemaObjectFactory(object):
     def __init__(self, client):
         self.deref = client.deref
         self.definitions = client.definitions
+        self.resolver = client.swagger_spec.resolver
         self._model_cache = lru_cache()(self.__model_class)
 
     @staticmethod
@@ -41,8 +42,7 @@ class SchemaObjectFactory(object):
             'object': dict
         }.get(prop_type, prop_type)
 
-    @staticmethod
-    def schema_class(object_schema, model_name, classes=False):
+    def schema_class(self, object_schema, model_name, classes=False):
         """
         Create a object-class based on the object_schema.  Use
         this class to create specific instances, and validate the
@@ -81,8 +81,7 @@ class SchemaObjectFactory(object):
         # if not model_name:
         #     model_name = SchemaObjectFactory.schema_model_name(object_schema)
 
-        obj_bldr = ObjectBuilder(object_schema)
-        cls_bldr = ClassBuilder(obj_bldr.resolver)
+        cls_bldr = ClassBuilder(self.resolver)
         model_cls = cls_bldr.construct(model_name, object_schema)
 
         # if `classes` is False(0) return the new model class,
