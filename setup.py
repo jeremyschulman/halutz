@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
 from setuptools import setup
-from pip.req.req_file import parse_requirements
-from pip.download import PipSession
 
 import halutz
+
+
+def requirements(filepath):
+    return [line.strip() for line in open(filepath).readlines()]
 
 
 setup(
@@ -20,11 +22,7 @@ setup(
     include_package_data=True,
     license='MIT',
     zip_safe=False,
-    install_requires=[
-        item.name
-        for item in parse_requirements(
-            'requirements.txt',
-            session=PipSession())],
+    install_requires=requirements('requirements.txt'),
     keywords=('serialization', 'rest', 'json', 'api', 'marshal',
               'marshalling', 'deserialization', 'validation', 'schema',
               'jsonschema', 'swagger', 'openapi', 'networking', 'automation'),
