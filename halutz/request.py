@@ -30,9 +30,12 @@ class Request(object):
         # body parameter name.
 
         if self.body_param:
-            body_inst = client.build.body_class(command.params[self.body_param])()
-            setattr(self, self.body_param, body_inst)
-
+            body_type = client.build.body_class(command.params[self.body_param])
+            if hasattr(body_type, 'type') and body_type.type == 'array':
+                setattr(self, self.body_param, body_type([]))
+            else:
+                setattr(self, self.body_param, body_type())
+                
     @property
     def path(self):
         return self.operation.path_name
